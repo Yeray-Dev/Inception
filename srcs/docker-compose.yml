@@ -14,6 +14,17 @@ services:
       - db_password
       - db_root_password
   nginx:
+    build: ./requirements/nginx/
+    container_name: nginx
+    restart:  always
+    networks:
+      - inception_network
+    volumes:
+      - wordpress:/var/www/html
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
   wordpress:
     build: ./requirements/wordpress/
     container_name: wordpress
