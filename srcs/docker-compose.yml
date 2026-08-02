@@ -20,7 +20,7 @@ services:
     networks:
       - inception_network
     volumes:
-      - wordpress:/var/www/html
+      - wordpress_data:/var/www/html
     depends_on:
       - wordpress
     ports:
@@ -45,5 +45,25 @@ services:
     depends_on:
       - mariadb
 volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/yblanco-/data/mariadb
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/yblanco-/data/wordpress
 networks:
+  inception_network:
+    driver: bridge
 secrets:
+  db_password:
+    file: ./requirements/secrets/db_password.txt
+  db_root_password:
+    file: ./requirements/secrets/db_root_password.txt
+  wp_admin_password:
+    file: ./requirements/secrets/wp_admin_password.txt
