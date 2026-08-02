@@ -19,6 +19,7 @@ RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh
 
 ##  COPY .conf /etc/mysql/mariadb.conf.d/.cnf // SI ES NECESARIO
 COPY setup.sh /setup.sh
+COPY ./www.conf /etc/php/8.2/fpm/pool.d/www.conf
 RUN chmod +x /setup.sh
 
 
