@@ -1,0 +1,13 @@
+services:
+  mariadb:
+    build: ./requirements/mariadb/
+    container_name: mariadb
+    restart: always
+    networks: 
+      - inception_network
+    volumes: 
+      - mariadb_data:/var/lib/mysql
+  nginx:
+volumes:
+networks:
+secrets:
