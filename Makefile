@@ -5,8 +5,9 @@ COMPOSE_FILE = srcs/docker-compose.yml
 all: up
 
 up:
+	mkdir -p ~/data/mariadb ~/data/wordpress
 	docker compose -f $(COMPOSE_FILE) up --build -d
-
+	
 down:
 	docker compose -f $(COMPOSE_FILE) down
 
@@ -21,5 +22,6 @@ clean:
 fclean:
 	$(MAKE) clean
 	docker volume prune -f
+	sudo rm -rf ~/data/mariadb ~/data/wordpress
 
 .PHONY: all up down re clean fclean
