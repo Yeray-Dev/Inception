@@ -6,7 +6,7 @@ all: up
 
 secrets:
 	mkdir -p srcs/requirements/secrets
-	cp /home/inception/Documents/requirements/secrets/*.txt srcs/requirements/secrets/
+	cp /home/yblanco-/Documents/requirements/secrets/*.txt srcs/requirements/secrets/
 
 up: secrets
 	mkdir -p ~/data/mariadb ~/data/wordpress
