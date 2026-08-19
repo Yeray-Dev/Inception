@@ -4,7 +4,11 @@ COMPOSE_FILE = srcs/docker-compose.yml
 
 all: up
 
-up:
+secrets:
+	mkdir -p srcs/requirements/secrets
+	cp /home/inception/Documents/requirements/secrets/*.txt srcs/requirements/secrets/
+
+up: secrets
 	mkdir -p ~/data/mariadb ~/data/wordpress
 	docker compose -f $(COMPOSE_FILE) up --build -d
 	
@@ -24,4 +28,4 @@ fclean:
 	docker volume prune -f
 	sudo rm -rf ~/data/mariadb ~/data/wordpress
 
-.PHONY: all up down re clean fclean
+.PHONY: all up down re clean fclean secrets
