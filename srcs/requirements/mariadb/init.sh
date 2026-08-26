@@ -4,6 +4,7 @@
 DB_PASSWORD=$(cat /run/secrets/db_password)
 DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
 
+# CREAMOS LAS CARPETAS Y DAMOS PERMISOS
 mkdir -p /run/mysqld
 chown mysql:mysql /run/mysqld
 
@@ -15,13 +16,14 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 mariadbd --user=mysql &
 MARIADB_PID=$!
 
-# INTENTAMOS CONECTAR CON MARIADB, USAMOS UN CONTADOR, SI EN 30 INTENTOS NO SE CONSIGUE CONTACTAR TERMINAMOS EL PROCESO
-RETRIES=30
+# INTENTAMOS CONECTAR CON MARIADB, USAMOS UN CONTADOR.
 until mysql -u root -e "SELECT 1;" 2>/dev/null || [ $RETRIES -eq 0 ]; do
   sleep 1
   RETRIES=$((RETRIES - 1))
 done
 
+# SI EN 30 INTENTOS NO SE CONSIGUE CONTACTAR TERMINAMOS EL PROCESO
+RETRIES=30
 if [ $RETRIES -eq 0 ]; then
   echo "MariaDB is down"
   exit 1
