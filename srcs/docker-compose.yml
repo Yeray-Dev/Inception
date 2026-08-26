@@ -1,6 +1,7 @@
 services:
   mariadb:
     build: ./requirements/mariadb/
+    image: src-mariadb
     container_name: mariadb
     restart: always
     networks: 
@@ -15,6 +16,7 @@ services:
       - db_root_password
   nginx:
     build: ./requirements/nginx/
+    image: src-nginx
     container_name: nginx
     restart:  always
     networks:
@@ -27,6 +29,7 @@ services:
       - "443:443"
   wordpress:
     build: ./requirements/wordpress/
+    image: src-wordpress
     container_name: wordpress
     restart: always
     networks:
