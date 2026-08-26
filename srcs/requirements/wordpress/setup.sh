@@ -21,8 +21,8 @@ if [ ! -f /var/www/html/wp-config.php ]; then
   wp config create --path=/var/www/html --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=mariadb --allow-root
 fi
 if ! wp core is-installed --path=/var/www/html --allow-root; then
-  wp core install --path=/var/www/html --url=$DOMAIN_NAME --title=Inception --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root
+  wp core install --path=/var/www/html --url=https://$DOMAIN_NAME --title=Inception --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root
 fi
 
-
+chown -R www-data:www-data /var/www/html
 exec php-fpm8.2 -F

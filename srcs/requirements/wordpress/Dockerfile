@@ -1,23 +1,23 @@
 FROM debian:bookworm
 
 RUN apt-get update && \
-    apt-get install -y \
-        php-fpm \
-        php-mysql \
-        php-curl \
-        php-gd \
-        php-mbstring \
-        php-xml \
+    apt-get install -y --no-install-recommends \
+        php8.2-cli \
+        php8.2-fpm \
+        php8.2-mysql \
+        php8.2-curl \
+        php8.2-gd \
+        php8.2-mbstring \
+        php8.2-xml \
+        php8.2-zip \
         curl \
-        mariadb-client \
-        php-zip && \
+        mariadb-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+RUN curl -fsSL -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x /usr/local/bin/wp
 
-##  COPY .conf /etc/mysql/mariadb.conf.d/.cnf // SI ES NECESARIO
 COPY setup.sh /setup.sh
 COPY ./www.conf /etc/php/8.2/fpm/pool.d/www.conf
 RUN chmod +x /setup.sh
