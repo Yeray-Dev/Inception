@@ -2,6 +2,8 @@
 
 DB_PASSWORD=$(cat /run/secrets/db_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
+WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
+
 
 RETRIES=30
 until mysqladmin ping -h mariadb -u $DB_USER -p"$DB_PASSWORD" 2>/dev/null || [ $RETRIES -eq 0 ]; do
