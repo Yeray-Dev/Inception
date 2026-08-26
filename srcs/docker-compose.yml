@@ -12,12 +12,11 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
     secrets:
-      - db_password:
-        file: ../secrets/db_password.txt
+      - db_password
       - db_root_password
   nginx:
     build: ./requirements/nginx/
-    image: src-nginx
+    image: nginx
     container_name: nginx
     restart:  always
     networks:
@@ -30,7 +29,7 @@ services:
       - "443:443"
   wordpress:
     build: ./requirements/wordpress/
-    image: src-wordpress
+    image: wordpress
     container_name: wordpress
     restart: always
     networks:
@@ -43,9 +42,12 @@ services:
       - DOMAIN_NAME=${DOMAIN_NAME}
       - WP_ADMIN_USER=${WP_ADMIN_USER}
       - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+      - WP_USER=${WP_USER}
+      - WP_USER_EMAIL=${WP_USER_EMAIL}
     secrets:
       - db_password
       - wp_admin_password
+      - wp_user_password
     depends_on:
       - mariadb
 volumes:
@@ -71,3 +73,5 @@ secrets:
     file: ./requirements/secrets/db_root_password.txt
   wp_admin_password:
     file: ./requirements/secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ./requirements/secrets/wp_user_password.txt
