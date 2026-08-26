@@ -1,7 +1,7 @@
 services:
   mariadb:
     build: ./requirements/mariadb/
-    image: src-mariadb
+    image: mariadb
     container_name: mariadb
     restart: always
     networks: 
@@ -12,7 +12,8 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
     secrets:
-      - db_password
+      - db_password:
+        file: ../secrets/db_password.txt
       - db_root_password
   nginx:
     build: ./requirements/nginx/

@@ -18,16 +18,14 @@ MARIADB_PID=$!
 
 # INTENTAMOS CONECTAR CON MARIADB, USAMOS UN CONTADOR.
 RETRIES=30
-until mysql -u root -e "SELECT 1;" 2>/dev/null || [ $RETRIES -eq 0 ]; do
-  sleep 1
+while ! mysqladmin ping -h mariadb -u "$DB_USER" -p"$DB_PASSWORD" --silent 2>/dev/null; do
   RETRIES=$((RETRIES - 1))
+  if [ "$RETRIES" -le 0 ]; then
+    echo "MariaDB is down"
+    exit 1
+  fi
+  sleep 1
 done
-
-# SI EN 30 INTENTOS NO SE CONSIGUE CONTACTAR TERMINAMOS EL PROCESO
-if [ $RETRIES -eq 0 ]; then
-  echo "MariaDB is down"
-  exit 1
-fi
 
 # CON LA BBDD LEVANTADA CREAMOS LAS TABLAS Y USUARIOS SINO EXISTIERAN
   mysql -u root <<EOF
