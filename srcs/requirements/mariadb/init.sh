@@ -17,13 +17,13 @@ mariadbd --user=mysql &
 MARIADB_PID=$!
 
 # INTENTAMOS CONECTAR CON MARIADB, USAMOS UN CONTADOR.
+RETRIES=30
 until mysql -u root -e "SELECT 1;" 2>/dev/null || [ $RETRIES -eq 0 ]; do
   sleep 1
   RETRIES=$((RETRIES - 1))
 done
 
 # SI EN 30 INTENTOS NO SE CONSIGUE CONTACTAR TERMINAMOS EL PROCESO
-RETRIES=30
 if [ $RETRIES -eq 0 ]; then
   echo "MariaDB is down"
   exit 1
